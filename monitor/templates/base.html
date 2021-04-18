@@ -23,7 +23,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="{% url 'monitor' %}">Home</a>
+                <a class="nav-item nav-link active" href="{% url 'create_server' %}">New server</a>
+                <a class="nav-item nav-link active" href="{% url 'create_notification' %}">New notification</a>
+                <a class="nav-item nav-link active" href="{% url 'pdf_generate' %}">Get Notif. Report</a>
+                <a class="nav-item nav-link active" href="{% url 'json_dump' %}">Download Data</a>
             </div>
         </div>
     </nav>

@@ -18,7 +18,12 @@ from django.urls import path
 from monitor import views
 
 urlpatterns = [
+    path('', views.show),
     path('admin/', admin.site.urls),
     path('monitor/', views.show, name = 'monitor'),
-    path('monitor/<int:id>/', views.showById, name = 'monitor_id')
+    path('monitor/<int:id>/', views.showById, name = 'monitor_id'),
+    path('new_notif/', views.createNotification, name = 'create_notification'),
+    path('new_server/', views.createServer, name = 'create_server'),
+    path('get_report/', views.getPDFReport, name = 'pdf_generate'),
+    path('get_dump/', views.getJSONDump, name = 'json_dump')
 ]

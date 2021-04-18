@@ -16,5 +16,5 @@ class Server(models.Model):
 
 class Notification(models.Model):
     type = models.IntegerField()
-    time = models.TimeField()
+    time = models.DateTimeField()
     server = models.ForeignKey(Server, on_delete=models.CASCADE)
