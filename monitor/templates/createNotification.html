@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}New notification{% endblock %}
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="row justify-content-md-center">
+        <div class="col-6">
+            {{ form.type|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-6">
+            {{ form.time|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-6">
+            {{ form.server|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center" style="margin-top: 15px;">
+        <div class="col-6">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
