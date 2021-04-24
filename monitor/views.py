@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core import serializers
 from django.http import HttpResponse
 from .models import Server, ServerGroup, Notification
@@ -10,15 +10,19 @@ import mimetypes, ast, json
 
 # Create your views here.
 def show(request):
-    servers = Server.objects.all()
+    servers = Server.objects.all() if request.user.is_authenticated else []
     return render(request, 'view.html', {'servers': servers})
 
 
 def showById(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/')
     server = Server.objects.get(id = int(id))
     return render(request, 'viewById.html', {'server': server})
 
 def createNotification(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
     form = NotificationForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -27,6 +31,8 @@ def createNotification(request):
     return render(request, 'createNotification.html', {'form' : form})
 
 def createServer(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
     form = ServerForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -35,6 +41,8 @@ def createServer(request):
     return render(request, 'createServer.html', {'form' : form})
 
 def getPDFReport(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
     serialized_data = serializers.serialize("json", Notification.objects.all())
     data = ast.literal_eval(serialized_data)
     pdf = FPDF('P', 'mm', 'A4')
@@ -56,6 +64,8 @@ def getPDFReport(request):
     return response
 
 def getJSONDump(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
     serialized_server = ast.literal_eval(serializers.serialize("json", Server.objects.all()))
     serialized_server_group = ast.literal_eval(serializers.serialize("json", ServerGroup.objects.all()))
     serialized_notif = ast.literal_eval(serializers.serialize("json", Notification.objects.all()))
